@@ -26,12 +26,8 @@ class ViewController: UIViewController {
     }
 
     func loadPage() {
-        // 优先加载打包进 App 的本地 index.html(本地页秒开,避免白屏;
-        // 页面内 iframe 再加载远程站点,加载中由本地页提示)
-        if let localURL = Bundle.main.url(forResource: "index", withExtension: "html") {
-            webView.loadFileURL(localURL,
-                                allowingReadAccessTo: localURL.deletingLastPathComponent())
-        } else if let u = URL(string: "http://uk.frp.one:46767/") {
+        // 直接加载目标网站(WebView 自带加载指示 + 失败重试 UI)
+        if let u = URL(string: "http://uk.frp.one:46767/") {
             webView.load(URLRequest(url: u))
         }
     }

@@ -1,7 +1,7 @@
 # JR_CompanyWork iOS
 
-> WebView 壳 App,打包本地 `index.html`(内嵌 iframe 加载 http://uk.frp.one:46767/)。
-> 本地页秒开避免白屏,iframe 加载中由页面自身提示。通过 GitHub Actions 云端打包 IPA,无需本地 Mac。
+> WebView 壳 App,WKWebView **直接加载** http://uk.frp.one:46767/(非 iframe 套壳)。
+> WebView 自带加载指示(转圈)+ 失败重试 UI,应对 frp 隧道偶发不稳定。通过 GitHub Actions 云端打包 IPA,无需本地 Mac。
 
 ---
 
@@ -12,8 +12,7 @@ ios_project_JR_CompanyWork/
 ├── .github/workflows/build-ipa.yml   # 云打包 workflow(无签名模式)
 ├── JR_CompanyWork/                     # 工程源码
 │   ├── AppDelegate.swift
-│   ├── ViewController.swift           # WKWebView 加载打包内的本地 index.html
-│   ├── index.html                      # 本地页面(iframe 内嵌远程站点)
+│   ├── ViewController.swift           # WKWebView 直连目标网站 + 加载指示/重试
 │   ├── Info.plist
 │   └── Assets.xcassets/
 │       ├── Contents.json
