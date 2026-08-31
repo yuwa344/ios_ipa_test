@@ -26,7 +26,12 @@ class ViewController: UIViewController {
     }
 
     func loadPage() {
-        if let u = URL(string: "https://jr-staff-center.onrender.com/") {
+        // 优先加载打包进 App 的本地 index.html(本地页秒开,避免白屏;
+        // 页面内 iframe 再加载远程 onrender,加载中由本地页提示)
+        if let localURL = Bundle.main.url(forResource: "index", withExtension: "html") {
+            webView.loadFileURL(localURL,
+                                allowingReadAccessTo: localURL.deletingLastPathComponent())
+        } else if let u = URL(string: "https://jr-staff-center.onrender.com/") {
             webView.load(URLRequest(url: u))
         }
     }

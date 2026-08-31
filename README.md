@@ -1,7 +1,7 @@
 # JR_CompanyWork iOS
 
-> WebView 壳 App,WKWebView 直接加载 https://jr-staff-center.onrender.com/
-> 通过 GitHub Actions 在云端 macOS runner 上自动打包 IPA,无需本地 Mac。
+> WebView 壳 App,打包本地 `index.html`(内嵌 iframe 加载 https://jr-staff-center.onrender.com/)。
+> 本地页秒开避免白屏,iframe 加载中由页面自身提示。通过 GitHub Actions 云端打包 IPA,无需本地 Mac。
 
 ---
 
@@ -12,7 +12,8 @@ ios_project_JR_CompanyWork/
 ├── .github/workflows/build-ipa.yml   # 云打包 workflow(无签名模式)
 ├── JR_CompanyWork/                     # 工程源码
 │   ├── AppDelegate.swift
-│   ├── ViewController.swift           # WKWebView 直接加载远程页面
+│   ├── ViewController.swift           # WKWebView 加载打包内的本地 index.html
+│   ├── index.html                      # 本地页面(iframe 内嵌远程站点)
 │   ├── Info.plist
 │   └── Assets.xcassets/
 │       ├── Contents.json

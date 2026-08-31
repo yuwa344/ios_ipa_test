@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Center (固定 iframe)</title>
+    <style>
+        /* 全局重置，消除所有边距和滚动 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;          /* 禁止页面滚动 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #1a1a2e;       /* 顶部空白可见的背景色 */
+        }
+
+        /* iframe 从顶部偏移 10px，高度相应减少，实现顶部留白 */
+        iframe {
+            position: fixed;
+            top: 40px;                 /* 顶部留出 10 像素 */
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 10px); /* 高度自适应，底部无额外留白 */
+            border: none;
+            display: block;
+            overflow: hidden;
+        }
+
+        /* 加载提示（居中显示） */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1.2rem;
+            z-index: 0;
+            opacity: 0.6;
+            pointer-events: none;
+            user-select: none;
+            text-align: center;
+            line-height: 1.8;
+        }
+        .loading .sub {
+            font-size: 0.9rem;
+            opacity: 0.5;
+        }
+
+        /* 加载完成后隐藏提示 */
+        iframe.loaded + .loading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 加载提示 -->
+    <div class="loading">
+        ⏳ 加载中...<br />
+        <span class="sub">如果页面需要登录，请直接在 iframe 中操作</span>
+    </div>
+
+    <!-- 内嵌目标网站，固定全屏（顶部偏移 10px） -->
+    <iframe
+        id="mainFrame"
+        src="https://jr-staff-center.onrender.com/"
+        title="Staff Center"
+        referrerpolicy="no-referrer-when-downgrade"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+        loading="eager"
+    ></iframe>
+
+    <script>
+        const iframe = document.getElementById('mainFrame');
+        const loading = document.querySelector('.loading');
+
+        // 加载完成后隐藏提示
+        iframe.addEventListener('load', function() {
+            this.classList.add('loaded');
+            if (loading) loading.style.display = 'none';
+        });
+
+        // 阻止页面滚动（触摸、滚轮、键盘方向键）
+        document.addEventListener('touchmove', function(e) {
+            if (!e.target.closest('iframe')) e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('wheel', function(e) {
+            if (!e.target.closest('iframe')) e.preventDefault();
+        }, { passive: false });
+
+        window.addEventListener('keydown', function(e) {
+            const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End'];
+            if (keys.includes(e.key) && !e.target.closest('iframe')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // 控制台提示
+        console.log('✅ 页面已固定，顶部留白 10px，工具栏已移除。');
+        console.log('💡 如遇 401 错误，请在 iframe 内登录或使用新标签页登录后刷新。');
+    </script>
+
+</body>
+</html>
