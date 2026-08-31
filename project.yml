@@ -1,0 +1,23 @@
+name: JR_CompanyWork
+options:
+  bundleIdPrefix: com.JRCompany
+  deploymentTarget:
+    iOS: "13.0"
+packages: {}
+targets:
+  JR_CompanyWork:
+    type: application
+    platform: iOS
+    sources:
+      - path: JR_CompanyWork
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.JRCompany.Work
+        INFOPLIST_FILE: JR_CompanyWork/Info.plist
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        IPHONEOS_DEPLOYMENT_TARGET: "13.0"
+        CODE_SIGN_STYLE: "Automatic"
+        DEVELOPMENT_TEAM: ""
+        # 启用 AppIcon
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
