@@ -1,6 +1,6 @@
 # JR_CompanyWork iOS
 
-> WebView 壳 App,打包本地 `index.html`(内嵌 iframe 加载 https://jr-staff-center.onrender.com/)。
+> WebView 壳 App,打包本地 `index.html`(内嵌 iframe 加载 http://uk.frp.one:46767/)。
 > 本地页秒开避免白屏,iframe 加载中由页面自身提示。通过 GitHub Actions 云端打包 IPA,无需本地 Mac。
 
 ---
